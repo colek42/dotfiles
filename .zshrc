@@ -97,6 +97,7 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
 export TERM="xterm-256color"
+export GOPATH=$HOME/go
 
 alias kg="kubectl get"
 alias kc="kubectl create"
