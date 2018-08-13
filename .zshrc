@@ -9,7 +9,7 @@ export TERM="xterm-256color"
 # Set name of the theme to load. Optionally, if you set this to "random"
 # it'll load a random theme each time that oh-my-zsh is loaded.
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME="amuse"
 
 # Set list of themes to load
 # Setting this variable when ZSH_THEME=random
@@ -99,10 +99,27 @@ export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin
 export TERM="xterm-256color"
 export GOPATH=$HOME/go
 
+
 alias kg="kubectl get"
 alias kc="kubectl create"
 alias k="kubectl"
 alias bo="cd ~/go/src/gitlab.com/boxboat/boxops"
-export EDITOR="vim"
+
+export EDITOR="code"
+
+if (( $+commands[kubectl] )); then
+    __KUBECTL_COMPLETION_FILE="${ZSH_CACHE_DIR}/kubectl_completion"
+
+    if [[ ! -f $__KUBECTL_COMPLETION_FILE ]]; then
+        kubectl completion zsh >! $__KUBECTL_COMPLETION_FILE
+    fi
+
+    [[ -f $__KUBECTL_COMPLETION_FILE ]] && source $__KUBECTL_COMPLETION_FILE
+
+    unset __KUBECTL_COMPLETION_FILE
+fi
 
 [ -s "/home/nkennedy/.scm_breeze/scm_breeze.sh" ] && source "/home/nkennedy/.scm_breeze/scm_breeze.sh"
+
+source $HOME/.dotfiles/kube-ps1.sh
+PROMPT='$(kube_ps1)'$PROMPT
